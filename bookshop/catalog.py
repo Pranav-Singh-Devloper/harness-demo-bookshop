@@ -33,15 +33,16 @@ def find_by_slug(books, slug):
 
 
 def search(books, query):
-    """Books whose title or author contains the query."""
-    return [book for book in books if query in book.title or query in book.author]
+    """Books whose title or author contains the query (case-insensitive)."""
+    query_lower = query.lower()
+    return [book for book in books if query_lower in book.title.lower() or query_lower in book.author.lower()]
 
 
 SORT_OPTIONS = {
     # name: (key function, reverse)
     "title": (lambda book: book.title.lower(), False),
     "price_asc": (lambda book: book.price, False),
-    "price_desc": (lambda book: book.price, False),
+    "price_desc": (lambda book: book.price, True),
     "year": (lambda book: book.year, False),
 }
 
